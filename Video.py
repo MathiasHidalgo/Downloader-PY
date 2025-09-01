@@ -1,27 +1,19 @@
 import yt_dlp
 
-
 def download(link):
-    # set the correct options before download
     ydl_opts = {
-        'format': 'bestvideo+bestaudio/best',  # Selects best video and best audio, then merges
-        'merge_output_format': 'webm',         # Forces the output container to WebM (or 'mkv')
-        'outtmpl':'%(title)s.%(ext)s', # Output file path template
-        'noplaylist': True,                     # Only download the video if it's part of a playlist
-        'nocheckcertificate': True,             # Useful if you encounter SSL errors (use with caution)
-        'postprocessors': [{
-            'key': 'FFmpegVideoConvertor',
-            'preferedformat': 'webm'
-        }]
+        'format': 'bestvideo+bestaudio/best',
+        'merge_output_format': 'mp4',   # Can change to 'webm' if needed
+        'outtmpl': '%(title)s.%(ext)s',
+        'noplaylist': True,
+        'nocheckcertificate': True
     }
     try:
-        # attempt to download without errors
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([link])
         print("Download complete!")
-    except:
-        # message to be printed in the case of error
-        print("Download error!")
+    except Exception as e:
+        print(f"Download error: {e}")
 
 run = True
 while run:
@@ -34,5 +26,3 @@ while run:
         run = False
     else:
         print("Invalid YouTube link. Try again!")
-
-
